@@ -1,1 +1,6 @@
-
+local whitelist = {
+{ID = 4124339158, Username = "TheGrantedLegend", HWID = "62f7ad54-31ad-4c31-b012-021add1d77dd"},
+{ID = 4124339158, Username = "TheGrantedLegend", HWID = "54D927F2-2E9D-4F9D-AB39-E8A02496D8B7"},
+{ID = 1286092323, Username = "453RHD", HWID = ""},
+-- Add more entries here as needed
+}
