@@ -1,6 +1,56 @@
+-- Function "NextPageScript"
+(function()
+local script = Instance.new("LocalScript", Instances.NextPage);
+local PageButton = script.Parent
+local CombatPage = script.Parent.Parent.Parent.CombatPage
+local HomePage = script.Parent.Parent.Parent.HomePage
+local ModPage = script.Parent.Parent.Parent.ModsPage
+local TeleportPage = script.Parent.Parent.Parent.TeleportPage
+local CombatPage2 = script.Parent.Parent.Parent.CombatPage2
+local NotAllowedNotification = script.Parent.Parent.Parent.Parent.NotificationNotAllowed
+
+PageButton.MouseButton1Click:Connect(function()
+-- Function to check player ID, main username, and HWID
+local function checkPlayer()
+local player = game.Players.LocalPlayer
+if player then
+-- List of allowed player IDs, main usernames, and whitelisted HWIDs
 local whitelist = {
 {ID = 4124339158, Username = "TheGrantedLegend", HWID = "62f7ad54-31ad-4c31-b012-021add1d77dd"},
 {ID = 4124339158, Username = "TheGrantedLegend", HWID = "54D927F2-2E9D-4F9D-AB39-E8A02496D8B7"},
-{ID = 1286092323, Username = "453RHD", HWID = ""},
 -- Add more entries here as needed
 }
+
+-- Retrieve the HWID using GetClientId()
+local hwid = game:GetService("RbxAnalyticsService"):GetClientId()
+
+-- Check if the player's ID, main username, and HWID match any in the whitelist
+for _, entry in ipairs(whitelist) do
+if player.UserId == entry.ID and player.Name == entry.Username and hwid == entry.HWID then
+print("Whitelisted! Your Player ID: " .. tostring(player.UserId))
+ModPage.Visible = false
+CombatPage.Visible = false
+HomePage.Visible = false
+TeleportPage.Visible = false
+CombatPage2.Visible = true
+return -- Stop checking once a match is found
+end
+end
+
+-- If the player's ID, username, or HWID are not in the whitelist
+warn("You are not verified. You will not have access to Combat Page 2 as it is paid.")
+CombatPage2.Visible = false
+PageButton.Visible = false
+NotAllowedNotification.Visible = true
+wait(6)
+NotAllowedNotification.Visible = false
+else
+warn("Local player not found.")
+end
+end
+
+-- Call the function to check the player
+checkPlayer()
+end)
+end)();
+
